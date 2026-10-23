@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AutoVision AI | Vehicle Recognition</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-icon">◎</span><span><b>AutoVision AI</b><small>VEHICLE INTELLIGENCE</small></span></a>
+      <nav>
+        <a class="nav-item active" href="/">▦ <span>Dashboard</span></a>
+        <a class="nav-item" href="/history">◷ <span>Detection History</span></a>
+      </nav>
+      <div class="side-note"><span class="live-dot"></span> Local system<br><small>Processing on your PC</small></div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div><p class="eyebrow">COMPUTER VISION / ANPR</p><h1>Vehicle Recognition</h1><p class="muted">Detect, read and review registration plates.</p></div>
+        <a class="button secondary" href="/history">View history ↗</a>
+      </header>
+      <section class="stats-grid">
+        <article class="stat-card"><span class="stat-label">Total detections</span><strong id="stat-total">0</strong><span class="stat-foot">Saved records</span></article>
+        <article class="stat-card"><span class="stat-label">Unique plates</span><strong id="stat-unique">0</strong><span class="stat-foot">Distinct candidates</span></article>
+        <article class="stat-card"><span class="stat-label">Today</span><strong id="stat-today">0</strong><span class="stat-foot">Detected today</span></article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel camera-panel">
+          <div class="panel-head"><div><h2>Live camera</h2><p class="muted">Allow browser camera access to begin.</p></div><span id="camera-status" class="status-pill">OFFLINE</span></div>
+          <div class="camera-stage">
+            <video id="camera-video" autoplay muted playsinline></video>
+            <canvas id="camera-canvas" hidden></canvas>
+            <div id="camera-placeholder" class="camera-placeholder"><span>⌾</span><b>Camera preview</b><small>Start camera to scan registration plates</small></div>
+            <div class="scan-corner tl"></div><div class="scan-corner tr"></div><div class="scan-corner bl"></div><div class="scan-corner br"></div>
+          </div>
+          <div class="button-row"><button id="start-camera" class="button primary">▶ Start camera</button><button id="stop-camera" class="button secondary" disabled>■ Stop</button></div>
+          <p class="hint">CPU mode: reduced-resolution frames are sampled every 2 seconds to keep an 8 GB RAM PC responsive.</p>
+          <div id="camera-results" class="result-list"><div class="empty-state">No plate candidates yet.</div></div>
+        </article>
+
+        <article class="panel upload-panel">
+          <div class="panel-head"><div><h2>Upload media</h2><p class="muted">Image or recorded video</p></div><span class="upload-icon">↑</span></div>
+          <form id="upload-form">
+            <label class="dropzone" for="media-file"><span class="upload-symbol">↑</span><b>Choose an image or video</b><small>JPG, PNG, WEBP, MP4, AVI, MOV, MKV</small><span class="button secondary">Browse files</span></label>
+            <input id="media-file" type="file" accept=".jpg,.jpeg,.png,.webp,.bmp,.mp4,.avi,.mov,.mkv,.webm" hidden>
+            <div id="selected-file" class="selected-file">No file selected</div>
+            <button id="analyze-button" class="button primary full" type="submit">Analyze media →</button>
+          </form>
+          <div id="upload-status" class="notice" role="status">First run initializes YOLO and OCR models; CPU processing may take a little longer.</div>
+          <div id="upload-results" class="result-list"><div class="empty-state">Results will appear here.</div></div>
+        </article>
+      </section>
+
+      <section class="panel lookup-panel">
+        <div class="panel-head"><div><h2>Registration prefix lookup</h2><p class="muted">Search the local sample directory by plate number or RTO code.</p></div></div>
+        <div class="lookup-row"><input id="rto-query" type="text" placeholder="e.g. UP 62 AB 1234 or MH12"><button id="rto-search" class="button primary">Search prefix</button></div>
+        <div id="rto-result" class="lookup-result muted">Enter a registration prefix to inspect the state and local RTO sample.</div>
+        <p class="hint">The included directory is a starter sample, not an official live government database. Verify all results before relying on them.</p>
+      </section>
+      <footer>AutoVision AI · Local prototype · Review OCR output before use</footer>
+    </main>
+  </div>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

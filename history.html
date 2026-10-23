@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detection History | AutoVision AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-icon">◎</span><span><b>AutoVision AI</b><small>VEHICLE INTELLIGENCE</small></span></a>
+      <nav><a class="nav-item" href="/">▦ <span>Dashboard</span></a><a class="nav-item active" href="/history">◷ <span>Detection History</span></a></nav>
+      <div class="side-note"><span class="live-dot"></span> Local system<br><small>Processing on your PC</small></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><p class="eyebrow">RECORDS / REVIEW</p><h1>Detection History</h1><p class="muted">Search saved OCR candidates and correct a plate when necessary.</p></div><a class="button secondary" href="/">← Dashboard</a></header>
+      <section class="panel">
+        <div class="lookup-row"><input id="history-search" type="search" placeholder="Search plate, state or RTO..."><button id="history-search-btn" class="button primary">Search</button><button id="export-csv" class="button secondary">Export CSV</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Plate candidate</th><th>State</th><th>RTO / District</th><th>Confidence</th><th>Source</th><th>Detected at</th><th>Review</th></tr></thead><tbody id="history-body"><tr><td colspan="7" class="empty-state">Loading history…</td></tr></tbody></table></div>
+        <p class="hint">Confidence is the OCR engine's text confidence, not a guarantee that the plate is correct.</p>
+      </section>
+      <footer>AutoVision AI · Local prototype · Verify before relying on results</footer>
+    </main>
+  </div>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
