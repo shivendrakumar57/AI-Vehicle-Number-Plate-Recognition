@@ -1,3 +1,4 @@
+import os
 import base64
 import re
 import uuid
@@ -17,7 +18,11 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 ALLOWED_IMAGE = {"jpg", "jpeg", "png", "webp", "bmp"}
 ALLOWED_VIDEO = {"mp4", "avi", "mov", "mkv", "webm"}
 
-app = Flask(__name__)
+# Render aur local dono ke liye templates aur static folders ka absolute path
+template_dir = BASE_DIR / "templates"
+static_dir = BASE_DIR / "static"
+
+app = Flask(__name__, template_folder=str(template_dir), static_folder=str(static_dir))
 app.config["MAX_CONTENT_LENGTH"] = 100 * 1024 * 1024
 app.config["UPLOAD_FOLDER"] = str(UPLOAD_DIR)
 init_db()
@@ -133,4 +138,5 @@ def too_large(_error):
     return jsonify({"error":"File is too large. Maximum upload size is 100 MB."}), 413
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=False, threaded=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False, threaded=True)
